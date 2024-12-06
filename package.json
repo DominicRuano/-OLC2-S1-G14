@@ -1,0 +1,25 @@
+{
+  "name": "-olc2-s1-g14",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "try": "node dist/index.js",
+    "prestart": "npm run reload",
+    "start": "node dist/index.js",
+    "reload" : "npm run build",
+    "prebuild": "npm run compile",
+    "build": "tsc",
+    "compile": "peggy --format es -o src/grammar.js grammar/grammar.pegjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "typescript": "^5.7.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "peggy": "^4.2.0"
+  }
+}
