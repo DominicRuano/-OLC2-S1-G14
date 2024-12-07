@@ -1,0 +1,27 @@
+{
+  "name": "-olc2-s1-g14",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+  "predev": "npm run compile",
+  "dev": "vite dev",
+  "prebuild": "npm run compile",
+  "build": "vite build",
+  "preview": "vite preview",
+  "lint": "eslint ./src --ext .js,.jsx,.ts,.tsx",
+  "lint:fix": "eslint ./src --ext .js,.jsx,.ts,.tsx --fix",
+  "check": "tsc --noEmit",
+  "check:watch": "tsc --noEmit --watch",
+  "compile": "peggy --format es -o src/lib/parser/peg-parser.js grammar/peg.pegjs"
+}
+,
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "peggy": "^4.2.0",
+    "typescript": "^5.7.2"
+  }
+}
