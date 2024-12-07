@@ -1,1 +1,9 @@
-inicio = "_hello";
+
+
+inicio 
+    = "_hel" adios como estas;
+inicio = 'hola' / "adios" / "como" / estas;
+inicio 
+    = hola adios
+    / "como" estas
+    / 'como' estas23 ;

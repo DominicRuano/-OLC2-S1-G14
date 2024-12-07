@@ -1,21 +1,31 @@
-Start
-    = head:Exp tail:( NL Exp)* 
+START
+    = head:EXP tail:( NL EXP)* NL?
         {
             return "All good!";
         }
 
-Exp "Tk_Expresion"
-    = _ Id _ "=" _ Literal _ ";"?
+EXP "Expresion"
+    = NL ID NL "=" NL ARGS NL ";"
 
-Literal "Tk_Literal"
-    = "\"" [_a-zA-Z0-9]*  "\""
-    / "\'" [_a-zA-Z0-9]*  "\'"
+ARGS "Arguments"
+    = CONCAT ( NL "/" NL CONCAT)*
 
-Id "Tk_Id"
-    = _ [_a-z][_a-z0-9]*
+CONCAT "Concatenation"
+    = LITERAL ( _ LITERAL)*
 
-_ "Tk_whitespace"
+LITERAL "Literal"
+    = _ ID
+    / _ STRING
+
+STRING "STRING"
+	= ["] [^"]* ["]
+    / ['] [^']* [']
+
+ID "name"
+    = [_a-z][_a-z0-9]i*
+
+_ "whitespace"
     = [ \t]*
 
-NL "Tk_newline"
-    = [\n\r]*
+NL "newline"
+    = [ \t\n\r]*
