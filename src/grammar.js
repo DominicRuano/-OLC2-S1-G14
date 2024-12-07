@@ -431,10 +431,10 @@ function peg$parse(input, options) {
         if (peg$silentFails === 0) { peg$fail(peg$e1); }
       }
       if (s4 !== peg$FAILED) {
-        s5 = peg$parse_();
+        s5 = peg$parseNL();
         s6 = peg$parseARGS();
         if (s6 !== peg$FAILED) {
-          s7 = peg$parse_();
+          s7 = peg$parseNL();
           if (input.charCodeAt(peg$currPos) === 59) {
             s8 = peg$c1;
             peg$currPos++;

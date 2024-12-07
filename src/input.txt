@@ -1,9 +1,26 @@
 
 
-inicio 
-    = "_hel" adios como estas;
-inicio = 'hola' / "adios" / "como" / estas;
-inicio 
-    = hola adios
-    / "como" estas
-    / 'como' estas23 ;
+myExp
+=
+    foo "hello world" 'barbaro'
+  /
+    baz "another" 'something'
+  /
+    qux "yet" "another" 'line'
+;
+
+anotherOne
+=
+    bar "simple"
+;
+
+megaExp
+=
+    alpha 'beta' "gamma"
+  /
+    delta "epsilon"
+  /
+    one "two" 'three' four "five"
+  /
+    x "y" z
+;
