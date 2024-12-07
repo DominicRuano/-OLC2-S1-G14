@@ -10,6 +10,7 @@ EXP "Expresion"
 ARGS "Arguments"
     = CONCAT ( NL "/" NL CONCAT)* 
     / QUESTION
+    / ADDITIVE
 
 CONCAT "Concatenation"
     = LITERAL ( _ LITERAL)*
@@ -40,4 +41,11 @@ NL "newline"
     = [ \t\n\r]*
 
 QUESTION "Question"
-    = 
+    = VARIABLE [?]
+    / [?]
+
+ADDITIVE "Additive"
+    = MULTIPLICATIVE [+] ADDITIVE    
+    / MULTIPLICATIVE
+
+
