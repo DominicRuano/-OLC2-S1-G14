@@ -1,32 +1,36 @@
-// Para pruebas
+gramatica
+  = rule (nl rule)*
 
-Calculator
-  = head:Expression tail:( "\n" @Expression )* {
-    return [head, ...tail]
-  }
+rule
+  = name nl "=" _ choice nl ";"
 
-Expression
-  = head:Term tail:(_ ("+" / "-") _ Term)* {
-      return tail.reduce(function(result, element) {
-        if (element[1] === "+") { return result + element[3]; }
-        if (element[1] === "-") { return result - element[3]; }
-      }, head);
-    }
+choice
+  = concatenacion ( nl "/"  nl concatenacion)*
+  / concatenacion
 
-Term
-  = head:Factor tail:(_ ("*" / "/") _ Factor)* {
-      return tail.reduce(function(result, element) {
-        if (element[1] === "*") { return result * element[3]; }
-        if (element[1] === "/") { return result / element[3]; }
-      }, head);
-    }
+concatenacion
+  = expression (_ expression)*
 
-Factor
-  = "(" _ @Expression _ ")"
-  / Integer
+expression
+  = exp [*]?
 
-Integer "integer"
-  = _ [0-9]+ { return parseInt(text(), 10); }
+exp
+  = name
+  / string
+  / group
+
+group "grupo"
+  = "(" _ choice _ ")"
+
+string
+	= ["] [^"]* ["]
+    / ['] [^']* [']
+
+name "id"
+  = [_a-z]i[_a-z0-9]i*
 
 _ "whitespace"
-  = [ \t\n\r]*
+  = [ \t]*
+
+nl "nuevalinea"
+  = [ \t\n\r]* 
