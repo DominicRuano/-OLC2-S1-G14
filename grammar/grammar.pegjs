@@ -19,7 +19,7 @@ exp
   / string
   / group
 
-group "grupo"
+group 
   = "(" _ choice _ ")"
 
 string
