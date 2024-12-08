@@ -1,51 +1,36 @@
-START
-    = head:EXP tail:( NL EXP)* NL?
-        {
-            return "All good!";
-        }
+gramatica
+  = rule (nl rule)*
 
-EXP "Expresion"
-    = NL ID NL "=" NL ARGS NL ";"
+rule
+  = name nl "=" _ choice nl ";"
 
-ARGS "Arguments"
-    = CONCAT ( NL "/" NL CONCAT)* 
-    / QUESTION
-    / ADDITIVE
+choice
+  = concatenacion ( nl "/"  nl concatenacion)*
+  / concatenacion
 
-CONCAT "Concatenation"
-    = LITERAL ( _ LITERAL)*
+concatenacion
+  = expression (_ expression)*
 
-VARIABLE "Variable"
-    = INTEGER
-    / STRING
-    / ID
+expression
+  = exp [*]?
 
-LITERAL "Literal"
-    = _ ID
-    / _ STRING
+exp
+  = name
+  / string
+  / group
 
-STRING "STRING"
+group "grupo"
+  = "(" _ choice _ ")"
+
+string
 	= ["] [^"]* ["]
     / ['] [^']* [']
-    
-INTEGER "INTEGER"
-    = [0-9]*   
 
-ID "name"
-    = [_a-z][_a-z0-9]i*
+name "id"
+  = [_a-z]i[_a-z0-9]i*
 
 _ "whitespace"
-    = [ \t]*
+  = [ \t]*
 
-NL "newline"
-    = [ \t\n\r]*
-
-QUESTION "Question"
-    = VARIABLE [?]
-    / [?]
-
-ADDITIVE "Additive"
-    = MULTIPLICATIVE [+] ADDITIVE    
-    / MULTIPLICATIVE
-
-
+nl "nuevalinea"
+  = [ \t\n\r]* 
