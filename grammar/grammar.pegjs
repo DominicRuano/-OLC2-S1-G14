@@ -12,7 +12,7 @@ concatenacion
   = expression (_ expression)*
 
 expression
-  = exp [*]?
+  = exp [*+?]?
 
 exp
   = name
