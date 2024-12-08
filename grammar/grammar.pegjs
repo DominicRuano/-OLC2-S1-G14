@@ -18,6 +18,7 @@ exp
   = name
   / string
   / group
+  / rango
 
 group 
   = "(" _ choice _ ")"
@@ -25,6 +26,17 @@ group
 string
 	= ["] [^"]* ["]
     / ['] [^']* [']
+
+rango
+  = "[" entrada_rango "]";
+
+entrada_rango
+  = (caracter "-" caracter
+  / caracter)+
+
+caracter
+  = [a-zA-Z0-9] 
+  / [^-\]]
 
 name "id"
   = [_a-z]i[_a-z0-9]i*
