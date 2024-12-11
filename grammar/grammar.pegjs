@@ -1,8 +1,8 @@
 gramatica
-  = rule (nl rule)*
+  = nl rule (nl rule)* nl
 
 rule
-  = name nl "=" _ choice nl ";"
+  = name ruleName? nl "=" _ choice nl ";"
 
 choice
   = concatenacion ( nl "/"  nl concatenacion)*
@@ -12,7 +12,7 @@ concatenacion
   = expression (_ expression)*
 
 expression
-  = exp [*+?]?
+  = tag? [$]* _ exp [*+?]?
 
 exp
   = name
@@ -37,6 +37,12 @@ entrada_rango
 caracter
   = [a-zA-Z0-9] 
   / [^-\]]
+
+tag "Etiqueta"
+  = "@"? name _ ":" _
+
+ruleName "Nombre de la regla"
+  = _ "\"" name "\"" _
 
 name "id"
   = [_a-z]i[_a-z0-9]i*
