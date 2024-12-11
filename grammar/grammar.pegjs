@@ -2,7 +2,7 @@ gramatica
   = nl rule (nl rule)* nl
 
 rule
-  = name ruleName? nl "=" _ choice nl ";"
+  = name ruleName? nl "=" _ choice "i"? nl (";")?
 
 choice
   = concatenacion ( nl "/"  nl concatenacion)*
@@ -13,12 +13,17 @@ concatenacion
 
 expression
   = "@"? tag? [$]* _ exp [*+?]?
+  / punto
+  / eoi
 
 exp
   = name
   / string
   / group
   / rango
+
+punto
+  = "."
 
 group 
   = "(" _ choice _ ")"
@@ -47,8 +52,15 @@ ruleName "Nombre de la regla"
 name "id"
   = [_a-z]i[_a-z0-9]i*
 
-_ "whitespace"
-  = [ \t]*
+eoi "end of input"
+  = "!."
 
-nl "nuevalinea"
-  = [ \t\n\r]* 
+_ "whitespace"
+  =  (comentario/[ \t])*
+
+nl "new line"
+  = (comentario/[ \t\n\r])*
+
+comentario "Comment"
+  = "//" [^\n]* nl
+  / "/*" (!"*/".)* "*/"
