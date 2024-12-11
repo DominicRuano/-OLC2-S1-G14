@@ -12,7 +12,7 @@ concatenacion
   = expression (_ expression)*
 
 expression
-  = tag? [$]* _ exp [*+?]?
+  = "@"? tag? [$]* _ exp [*+?]?
 
 exp
   = name
@@ -39,7 +39,7 @@ caracter
   / [^-\]]
 
 tag "Etiqueta"
-  = "@"? name _ ":" _
+  = name _ ":" _
 
 ruleName "Nombre de la regla"
   = _ "\"" name "\"" _
