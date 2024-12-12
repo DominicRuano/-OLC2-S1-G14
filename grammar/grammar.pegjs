@@ -13,6 +13,7 @@ concatenacion
 
 expression
   = "@"? tag? [$]* _ exp [*+?]?
+  / ("!" / "&")_ expression 
   / "$"? exp (_ quantifier _)?
   / punto
   / eoi
