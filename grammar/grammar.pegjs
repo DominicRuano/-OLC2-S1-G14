@@ -12,7 +12,7 @@ concatenacion
   = expression (_ expression)*
 
 expression
-  = "@"? tag? [$]* _ exp [*+?]?
+  = "@"? tag? [$]* _ exp _ [*+?]?
   / ("!" / "&")_ expression 
   / "$"? exp (_ quantifier _)?
   / punto

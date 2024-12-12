@@ -634,7 +634,7 @@ function peg$parse(input, options) {
   }
 
   function peg$parseexpression() {
-    var s0, s1, s2, s3, s4, s5, s6;
+    var s0, s1, s2, s3, s4, s5, s6, s7;
 
     s0 = peg$currPos;
     if (input.charCodeAt(peg$currPos) === 64) {
@@ -672,17 +672,18 @@ function peg$parse(input, options) {
     s4 = peg$parse_();
     s5 = peg$parseexp();
     if (s5 !== peg$FAILED) {
-      s6 = input.charAt(peg$currPos);
-      if (peg$r1.test(s6)) {
+      s6 = peg$parse_();
+      s7 = input.charAt(peg$currPos);
+      if (peg$r1.test(s7)) {
         peg$currPos++;
       } else {
-        s6 = peg$FAILED;
+        s7 = peg$FAILED;
         if (peg$silentFails === 0) { peg$fail(peg$e6); }
       }
-      if (s6 === peg$FAILED) {
-        s6 = null;
+      if (s7 === peg$FAILED) {
+        s7 = null;
       }
-      s1 = [s1, s2, s3, s4, s5, s6];
+      s1 = [s1, s2, s3, s4, s5, s6, s7];
       s0 = s1;
     } else {
       peg$currPos = s0;
