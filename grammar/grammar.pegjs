@@ -1,19 +1,23 @@
 gramatica
-  = nl rule (nl rule)* nl
+  = rule+ nl
 
 rule
-  = name ruleName? nl "=" _ choice "i"? nl (";")?
+  = nl id nl string? nl "=" _ choice nl (_";"_)?
 
 choice
   = concatenacion ( nl "/"  nl concatenacion)*
-  / concatenacion
 
 concatenacion
-  = expression (_ expression)*
+  = pluck (_ pluck)*
+
+pluck
+  = "@"? _ label
+
+label
+  = (id _":"_)? expression
 
 expression
-  = "@"? tag? [$]* _ exp _ [*+?]?
-  / ("!" / "&")_ expression 
+  = ("!" / "&")_ expression 
   / "$"? exp (_ quantifier _)?
   / punto
   / eoi
@@ -26,10 +30,10 @@ quantifier
   / "|" _ (int / id)? _ ".." _ (int / id)? _ "," _ choice _ "|"
 
 exp
-  = name
-  / string
-  / group
-  / rango
+  = id
+  / string "i"?
+  / group  
+  / rango "i"?
 
 punto
   = "."
@@ -55,15 +59,6 @@ caracter
 id "identifier"
   = [_a-z]i[_a-z0-9]i*
 
-tag "Etiqueta"
-  = name _ ":" _
-
-ruleName "Nombre de la regla"
-  = _ "\"" name (_ name)* "\"" _
-
-name "id"
-  = [_a-z]i[_a-z0-9]i*
-
 eoi "end of input"
   = "!."
 
@@ -76,6 +71,6 @@ nl "new line"
 int
   = [0-9]+
 
-comentario "Comment"
+comentario
   = "//" [^\n]* nl
   / "/*" (!"*/".)* "*/"
