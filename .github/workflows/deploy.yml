@@ -1,0 +1,27 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main # Cambia 'main' si tu rama principal tiene otro nombre
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout del repositorio
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # 2. Instalación de dependencias Y build
+      - name: Install & Build
+        run: cd frontend && npm i && npm run build
+
+      # 3. Deploy a GitHub Pages
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@4.1.1
+        with:
+          BRANCH: gh-pages
+          FOLDER: ./frontend/dist
+          

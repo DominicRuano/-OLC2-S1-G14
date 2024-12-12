@@ -1,51 +1,66 @@
-START
-    = head:EXP tail:( NL EXP)* NL?
-        {
-            return "All good!";
-        }
+gramatica
+  = nl rule (nl rule)* nl
 
-EXP "Expresion"
-    = NL ID NL "=" NL ARGS NL ";"
+rule
+  = name ruleName? nl "=" _ choice "i"? nl (";")?
 
-ARGS "Arguments"
-    = CONCAT ( NL "/" NL CONCAT)* 
-    / QUESTION
-    / ADDITIVE
+choice
+  = concatenacion ( nl "/"  nl concatenacion)*
+  / concatenacion
 
-CONCAT "Concatenation"
-    = LITERAL ( _ LITERAL)*
+concatenacion
+  = expression (_ expression)*
 
-VARIABLE "Variable"
-    = INTEGER
-    / STRING
-    / ID
+expression
+  = "@"? tag? [$]* _ exp [*+?]?
+  / punto
+  / eoi
 
-LITERAL "Literal"
-    = _ ID
-    / _ STRING
+exp
+  = name
+  / string
+  / group
+  / rango
 
-STRING "STRING"
+punto
+  = "."
+
+group 
+  = "(" _ choice _ ")"
+
+string
 	= ["] [^"]* ["]
     / ['] [^']* [']
-    
-INTEGER "INTEGER"
-    = [0-9]*   
 
-ID "name"
-    = [_a-z][_a-z0-9]i*
+rango
+  = "[" entrada_rango "]";
+
+entrada_rango
+  = (caracter "-" caracter
+  / caracter)+
+
+caracter
+  = [a-zA-Z0-9] 
+  / [^-\]]
+
+tag "Etiqueta"
+  = name _ ":" _
+
+ruleName "Nombre de la regla"
+  = _ "\"" name "\"" _
+
+name "id"
+  = [_a-z]i[_a-z0-9]i*
+
+eoi "end of input"
+  = "!."
 
 _ "whitespace"
-    = [ \t]*
+  =  (comentario/[ \t])*
 
-NL "newline"
-    = [ \t\n\r]*
+nl "new line"
+  = (comentario/[ \t\n\r])*
 
-QUESTION "Question"
-    = VARIABLE [?]
-    / [?]
-
-ADDITIVE "Additive"
-    = MULTIPLICATIVE [+] ADDITIVE    
-    / MULTIPLICATIVE
-
-
+comentario "Comment"
+  = "//" [^\n]* nl
+  / "/*" (!"*/".)* "*/"
