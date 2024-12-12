@@ -13,8 +13,17 @@ concatenacion
 
 expression
   = "@"? tag? [$]* _ exp [*+?]?
+  / ("!" / "&")_ expression 
+  / "$"? exp (_ quantifier _)?
   / punto
   / eoi
+
+quantifier
+  = [*+?]
+  / "|" _ (int / id) _ "|"
+  / "|" _ (int / id)? _ ".." _ (int / id)? _ "|"
+  / "|" _ (int / id)? _ "," _ choice _ "|"
+  / "|" _ (int / id)? _ ".." _ (int / id)? _ "," _ choice _ "|"
 
 exp
   = name
@@ -43,6 +52,9 @@ caracter
   = [a-zA-Z0-9] 
   / [^-\]]
 
+id "identifier"
+  = [_a-z]i[_a-z0-9]i*
+
 tag "Etiqueta"
   = name _ ":" _
 
@@ -60,6 +72,9 @@ _ "whitespace"
 
 nl "new line"
   = (comentario/[ \t\n\r])*
+
+int
+  = [0-9]+
 
 comentario "Comment"
   = "//" [^\n]* nl
