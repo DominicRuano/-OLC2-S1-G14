@@ -59,7 +59,7 @@ tag "Etiqueta"
   = name _ ":" _
 
 ruleName "Nombre de la regla"
-  = _ "\"" name "\"" _
+  = _ "\"" name (_ name)* "\"" _
 
 name "id"
   = [_a-z]i[_a-z0-9]i*
