@@ -1,14 +1,14 @@
 gramatica
-  = rule+ nl
+  = rule+ _
 
 rule
-  = nl id nl string? nl "=" _ choice nl (_";"_)?
+  = _ id _ string? _ "=" _ choice  (_";")? 
 
 choice
-  = concatenacion ( nl "/"  nl concatenacion)*
+  = concatenacion (_ "/" _ concatenacion)*
 
 concatenacion
-  = pluck (_ pluck)*
+  = pluck (_ pluck !(_ string? _ "="))*
 
 pluck
   = "@"? _ label
@@ -46,7 +46,7 @@ string
     / ['] [^']* [']
 
 rango
-  = "[" entrada_rango "]";
+  = "[" entrada_rango "]"
 
 entrada_rango
   = (caracter "-" caracter
@@ -63,14 +63,11 @@ eoi "end of input"
   = "!."
 
 _ "whitespace"
-  =  (comentario/[ \t])*
-
-nl "new line"
-  = (comentario/[ \t\n\r])*
+  = (comentario / [ \t\r\n])*
 
 int
   = [0-9]+
 
 comentario
-  = "//" [^\n]* nl
+  = "//" [^\n]* _
   / "/*" (!"*/".)* "*/"
